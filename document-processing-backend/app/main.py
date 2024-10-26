@@ -2,9 +2,12 @@ import os
 from fastapi import FastAPI
 from dotenv import load_dotenv
 import uvicorn
+from app.api.routers import user, document
 
 
 app = FastAPI()
+app.include_router(user.router, prefix="/api/v1/users", tags=["Users"])
+app.include_router(document.router, prefix="/api/v1/documents", tags=["Documents"])
 load_dotenv()
 
 @app.get("/")
