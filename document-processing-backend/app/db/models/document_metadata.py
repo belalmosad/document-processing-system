@@ -12,6 +12,7 @@ class DocumentMetadata(Base):
     keywords = Column(JSONB, nullable=True)
     filename = Column(String, nullable=False)
     author_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    processing_status = Column(String, nullable=True)
 
     author = relationship("User", back_populates="documents")
     user_permissions = relationship("DocumentUserPermission", back_populates="document")
