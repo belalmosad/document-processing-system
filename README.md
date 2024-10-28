@@ -11,6 +11,8 @@ The system consists of major five components interacting together:
 
 ## System architecture
 
+<img src="./pictures/sys_arch.svg" />
+
 ## Database UML diagram
 
 <img src="./pictures/db_uml.svg">
