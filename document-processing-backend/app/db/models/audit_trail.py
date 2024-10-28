@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from app.db.base import Base
+from db.base import Base
 
 class AuditTrail(Base):
     __tablename__ = "audit_trail"
