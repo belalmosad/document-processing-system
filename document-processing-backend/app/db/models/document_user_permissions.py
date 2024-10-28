@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from app.db.base import Base
+from db.base import Base
 
 class DocumentUserPermission(Base):
     __tablename__ = "document_user_permissions"
