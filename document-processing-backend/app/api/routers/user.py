@@ -8,8 +8,9 @@ from core.dependencies import get_user_service
 router = APIRouter()
 
 @router.post("/signup")
-def user_signup_route(user: UserCreate, db: Session = Depends(get_db)):
-    user_service = UserService(db)
+def user_signup_route(
+    user: UserCreate, 
+    user_service: UserService = Depends(get_user_service)):
     db_user = user_service.create_user(user)
     return {
         "Success": True,
