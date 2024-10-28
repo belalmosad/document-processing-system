@@ -1,15 +1,17 @@
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi import Response
+from fastapi import HTTPException
 
 class ExceptionHandlingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         try:
             response = await call_next(request)
             return response
-        except Exception as e:
+        except HTTPException as e:
             if(e):
-                message = str(e)
+                message = str(e.detail)
+                status_code = e.status_code
             else: 
                 message = "Internal Server Error"
-            return JSONResponse(status_code=500, content={"message": message})
+                status_code = 500
+            return JSONResponse(status_code=status_code, content={"message": message})
