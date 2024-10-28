@@ -18,7 +18,6 @@ class CustomResponseMiddleware(BaseHTTPMiddleware):
         process_time = time.time() - start_time
         return JSONResponse(
            content={
-                "success": True,
                 "status": response.status_code,
                 "data": parsed_body if body else None,
                 "process_time": f"{process_time * 1000} ms"
