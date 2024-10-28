@@ -8,9 +8,7 @@ load_dotenv()
 
 DB_URL = Config.DB_URL
 
-
-DATABASE_URL = str(DB_URL)
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DB_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def get_db():
     db = SessionLocal()
