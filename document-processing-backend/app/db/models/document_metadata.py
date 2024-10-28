@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
-from app.db.base import Base
+from db.base import Base
 
 class DocumentMetadata(Base):
     __tablename__ = "documents"
