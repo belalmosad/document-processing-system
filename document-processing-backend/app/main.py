@@ -5,10 +5,14 @@ import uvicorn
 from api.routers import user, document
 from db.base import import_models
 from middleware.exception_handling import ExceptionHandlingMiddleware
+from middleware.custom_response import CustomResponseMiddleware
+
 
 
 app = FastAPI()
 app.add_middleware(ExceptionHandlingMiddleware)
+app.add_middleware(CustomResponseMiddleware)
+
 import_models() 
 
 app.include_router(user.router, prefix="/api/v1/users", tags=["Users"])
