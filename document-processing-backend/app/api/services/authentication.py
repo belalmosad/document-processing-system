@@ -2,12 +2,13 @@ from datetime import datetime, timedelta, timezone
 import os
 import jwt
 from dotenv import load_dotenv
+from core.config import Config
 
 class AuthenticationService:
     load_dotenv()
-    ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
-    SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-    ALGORITHM=os.getenv("JWT_ALGORITHM")
+    ACCESS_TOKEN_EXPIRE_MINUTES = Config.ACCESS_TOKEN_EXPIRE_MINUTES
+    SECRET_KEY = Config.SECRET_KEY
+    ALGORITHM=Config.ALGORITHM
 
     def create_access_token(self, data: dict):
         payload = data.copy()

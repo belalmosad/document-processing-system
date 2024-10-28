@@ -2,10 +2,11 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from core.config import Config
 
 load_dotenv()
 
-DB_URL= os.getenv("DB_URL")
+DB_URL = Config.DB_URL
 
 
 DATABASE_URL = str(DB_URL)

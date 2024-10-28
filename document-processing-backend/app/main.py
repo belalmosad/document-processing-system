@@ -6,6 +6,7 @@ from api.routers import user, document
 from db.base import import_models
 from middleware.exception_handling import ExceptionHandlingMiddleware
 from middleware.custom_response import CustomResponseMiddleware
+from core.config import Config
 
 
 
@@ -21,4 +22,4 @@ app.include_router(document.router, prefix="/api/v1/documents", tags=["Documents
 load_dotenv()
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=os.getenv("HOST", "0.0.0.0"), port=int(os.getenv("PORT", 3001)), reload=os.getenv("DEBUG"))
+    uvicorn.run("main:app", host=Config.HOST, port=Config.PORT, reload=Config.RELOAD)
