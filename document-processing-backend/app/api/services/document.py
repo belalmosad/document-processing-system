@@ -76,6 +76,7 @@ class DocumentService:
         db_document_metadata = DocumentMetadata(
             document_type=document_type,
             size=document_data.size,
+            mime_type=document_data.content_type,
             keywords=processed_document,
             filename=document_data.filename,
             author_id=28,
@@ -108,10 +109,9 @@ class DocumentService:
         with open(document_path, "rb") as document_to_read:
             document_output.write(document_to_read.read())
         document_output.seek(0)
-        return StreamingResponse(document_output, media_type="application/pdf", headers={
-        "Content-Disposition": f"attachment; filename='sssss'"})
+        return StreamingResponse(document_output, media_type=f"{document_metadata.mime_type}", headers={
+        "Content-Disposition": f'attachment; filename="{document_metadata.filename}"'})
         
-    
     # Private helper functions
     def _map_MIME_type(self, type: str) -> str:
         MIME_types = {

@@ -9,6 +9,7 @@ class DocumentMetadata(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     document_type = Column(String, nullable=False)
     size = Column(Float, nullable=False)
+    mime_type = Column(String, nullable=True)
     keywords = Column(JSONB, nullable=True)
     filename = Column(String, nullable=False)
     author_id = Column(Integer, ForeignKey("users.id"), nullable=False)

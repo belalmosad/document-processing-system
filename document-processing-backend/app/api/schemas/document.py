@@ -9,6 +9,7 @@ class DocumentMetadataResponse(BaseModel):
     author_id: int
     filename: str
     size: float
+    mime_type: str
     processing_status: str
 
     class Config:
