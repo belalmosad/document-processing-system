@@ -56,7 +56,7 @@ class DocumentFactory:
         if not processor_class:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Unsupported document type: {document_type}"
+                detail=f"Unsupported document type"
             )
         return processor_class()
     
@@ -83,6 +83,20 @@ class DocumentService:
         self.db.commit()
         self.db.refresh(db_document_metadata)
         return db_document_metadata
+    
+    def get_document_metadata_by_document_id(self, document_id: int):
+        result: DocumentMetadata = self.db.query(DocumentMetadata).filter(DocumentMetadata.id == document_id).first()
+        if(not result):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Document not found"
+            )
+        return result
+    
+    def get_document_by_author_id(self, author_id: int):
+        return self.db.query(DocumentMetadata).filter(DocumentMetadata.author_id == author_id).all()
+    
+        
     
     # Private helper function
     def _map_MIME_type(self, type: str) -> str:
