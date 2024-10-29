@@ -16,6 +16,9 @@ class Config:
     ALGORITHM: str = os.getenv("JWT_ALGORITHM")
     DB_URL: str = os.getenv("DB_URL")
     
+    # volume path
+    VOLUME_PATH=os.getenv("VOLUME_PATH")
+    
     # Stop words for document processing
     STOP_WORDS= ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 
     'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 
