@@ -38,7 +38,9 @@ class UserService:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid username or password"
             )
-        access_token = self.authentication_service.create_access_token({"sub": db_user.id})
+        access_token = self.authentication_service.create_access_token({
+            "user_id": db_user.id,
+            "username": db_user.username})
         return access_token
 
     # Helper functions
