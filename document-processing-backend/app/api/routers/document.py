@@ -3,8 +3,9 @@ from fastapi.responses import StreamingResponse
 from core.dependencies import get_document_service
 from api.services.document import DocumentService
 from api.schemas.document import DocumentMetadataResponse
+from core.security import auth_guard
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(auth_guard)])
 
 @router.post("/upload")
 async def upload_and_process_document_router(
