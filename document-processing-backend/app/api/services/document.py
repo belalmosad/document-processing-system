@@ -15,13 +15,6 @@ class DocumentProcessor(ABC):
     @abstractmethod
     def process(self, document_data: UploadFile) -> defaultdict[str, int]:
         pass
-    
-class PDFProcessor(DocumentProcessor):
-    async def process(self, document_data: UploadFile) -> defaultdict[str, int]:
-       content = await self._extract_content(document_data)
-       key_words = self._extract_keywords(content)
-       return key_words
-    
     async def _extract_content(self, document_data: UploadFile):
         pdf_bytes = await document_data.read()
         pdf_stream = BytesIO(pdf_bytes)
@@ -40,7 +33,13 @@ class PDFProcessor(DocumentProcessor):
             if word not in stop_words:
                 result[word] += 1
         return result
-        
+    
+class PDFProcessor(DocumentProcessor):
+    async def process(self, document_data: UploadFile) -> defaultdict[str, int]:
+       content = await self._extract_content(document_data)
+       key_words = self._extract_keywords(content)
+       return key_words
+    
 class TXTProcessor(DocumentProcessor):
     def process(self, document_data: UploadFile):
         return "Processing TXT"
