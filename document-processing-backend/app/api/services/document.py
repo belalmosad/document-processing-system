@@ -3,6 +3,7 @@ from io import BytesIO
 from pathlib import Path
 import re
 from fastapi import HTTPException, UploadFile, status
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from api.schemas.document import DocumentMetadataResponse
 from db.models.document_metadata import DocumentMetadata
@@ -98,6 +99,17 @@ class DocumentService:
     def get_document_by_author_id(self, author_id: int):
         return self.db.query(DocumentMetadata).filter(DocumentMetadata.author_id == author_id).all()
     
+    def stream_document(self, document_id: int):
+        document_metadata = self.get_document_metadata_by_document_id(document_id)
+        volume_path = Path(Config.VOLUME_PATH)
+        document_name = document_metadata.filename
+        document_path = Path(volume_path / document_name)
+        document_output = BytesIO()
+        with open(document_path, "rb") as document_to_read:
+            document_output.write(document_to_read.read())
+        document_output.seek(0)
+        return StreamingResponse(document_output, media_type="application/pdf", headers={
+        "Content-Disposition": f"attachment; filename='sssss'"})
         
     
     # Private helper functions
