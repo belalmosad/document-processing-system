@@ -7,7 +7,6 @@ class DocumentMetadataResponse(BaseModel):
     id: int
     document_type: str
     author_id: int
-    keywords: defaultdict[str, int]
     filename: str
     size: float
     processing_status: str
