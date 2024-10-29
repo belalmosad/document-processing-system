@@ -16,6 +16,15 @@ class DocumentProcessor(ABC):
     def process(self, document_data: UploadFile) -> defaultdict[str, int]:
         pass
     
+    def _extract_keywords(self, content: str):
+        stop_words = Config.STOP_WORDS
+        result: defaultdict[str, int] = defaultdict(int)
+        words = re.findall(r'\b\w+\b', content.lower())
+        for word in words:
+            if word not in stop_words:
+                result[word] += 1
+        return result
+    
 class PDFProcessor(DocumentProcessor):
     async def process(self, document_data: UploadFile) -> defaultdict[str, int]:
        content = await self._extract_content(document_data)
@@ -31,15 +40,6 @@ class PDFProcessor(DocumentProcessor):
            content_list.append(page.extract_text().replace("\n", ""))
         content = "".join(content_list)
         return content
-    
-    def _extract_keywords(self, content: str):
-        stop_words = Config.STOP_WORDS
-        result: defaultdict[str, int] = defaultdict(int)
-        words = re.findall(r'\b\w+\b', content.lower())
-        for word in words:
-            if word not in stop_words:
-                result[word] += 1
-        return result
         
 class TXTProcessor(DocumentProcessor):
     def process(self, document_data: UploadFile):
