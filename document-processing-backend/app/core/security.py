@@ -24,21 +24,16 @@ async def auth_guard(
     token: str = Depends(get_token_from_header), 
     auth_service: AuthenticationService = Depends(get_auth_service)):
     payload = auth_service.verify_token(token)
-    print(payload)
     if payload is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials"
         )
     request.state.user = payload
-    print("payload")
-    print(payload)
     return payload
 
 async def authorize_to_show_document(request: Request, document_id: int, session: Session = Depends(get_db)):
     user_id = request.state.user["user_id"]
-    print(user_id)
-    print(document_id)
     is_authorized = session.query(
         exists().where(
             or_(
