@@ -1,5 +1,6 @@
 from collections import defaultdict
 from io import BytesIO
+from pathlib import Path
 import re
 from fastapi import HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
@@ -82,6 +83,7 @@ class DocumentService:
         self.db.add(db_document_metadata)
         self.db.commit()
         self.db.refresh(db_document_metadata)
+        await self._save_document_in_volume(document_data)
         return db_document_metadata
     
     def get_document_metadata_by_document_id(self, document_id: int):
@@ -98,12 +100,23 @@ class DocumentService:
     
         
     
-    # Private helper function
+    # Private helper functions
     def _map_MIME_type(self, type: str) -> str:
         MIME_types = {
             "text/plain": "txt",
             "application/pdf": "pdf"
         }
         return MIME_types.get(type, "unknown")
+        
+    async def _save_document_in_volume(self, document_data: UploadFile):
+        await document_data.seek(0) # to ensure the pointer is reset        
+        volume_path = Path(Config.VOLUME_PATH)
+        file_path = volume_path / document_data.filename
+        file_content = await document_data.read()
+        with open(file_path, "wb") as document_to_write:
+            document_to_write.write(file_content)
+        return {"filename": document_data.filename, "path": str(file_path)}
+        
+        
     
     
