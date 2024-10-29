@@ -42,8 +42,18 @@ class PDFProcessor(DocumentProcessor):
         return content
         
 class TXTProcessor(DocumentProcessor):
-    def process(self, document_data: UploadFile):
-        return "Processing TXT"
+    async def process(self, document_data: UploadFile):
+        content = await self._extract_content(document_data)
+        key_words = self._extract_keywords(content)
+        return key_words
+    
+    async def _extract_content(self, document_data: UploadFile):
+        txt_bytes = await document_data.read()
+        txt_content = txt_bytes.decode("utf-8")
+        content_list = [] # To be same as StringBuilder in java for better performance instead of reassign string
+        for line in txt_content:
+            content_list.append(line.strip())
+        return "".join(content_list)
         
 class DocumentFactory:
     
