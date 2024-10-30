@@ -55,8 +55,8 @@ async def authorize_to_show_document(request: Request, document_id: int, session
     return is_authorized
 
 async def authorize_admin(request: Request):
-        
-    if "role" not in request.state.user or request.state.user["role"] != "admin":
+    user = getattr(request.state, 'user', {})
+    if "role" not in user or user["role"] != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not authorized to perform action"
