@@ -17,6 +17,5 @@ class DocumentMetadata(Base):
 
     author = relationship("User", back_populates="documents")
     user_permissions = relationship("DocumentUserPermission", back_populates="document")
-    audit_trails = relationship("AuditTrail", back_populates="document")
 
 

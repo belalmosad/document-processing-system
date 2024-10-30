@@ -6,6 +6,7 @@ from api.routers import user, document, admin
 from db.base import import_models
 from middleware.exception_handling import ExceptionHandlingMiddleware
 from middleware.custom_response import CustomResponseMiddleware
+from middleware.audit_trail import AuditTrailMiddleware
 from core.config import Config
 
 
@@ -13,6 +14,7 @@ from core.config import Config
 app = FastAPI()
 app.add_middleware(ExceptionHandlingMiddleware)
 app.add_middleware(CustomResponseMiddleware)
+app.add_middleware(AuditTrailMiddleware)
 
 import_models() 
 

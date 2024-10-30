@@ -8,9 +8,8 @@ class AuditTrail(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    document_id = Column(Integer, ForeignKey("documents.id"), nullable=False)
     action = Column(String, nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
+    action_type = Column(String, nullable=False)
+    timestamp = Column(DateTime, default=datetime.now(), nullable=False)
 
     user = relationship("User", back_populates="audit_trails")
-    document = relationship("DocumentMetadata", back_populates="audit_trails")
