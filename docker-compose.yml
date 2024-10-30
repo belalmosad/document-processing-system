@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  app1:
+    image: external-api
+    container_name: external-api-container
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+    depends_on:
+      - db
+    networks:
+      - app_network
+    volumes:
+      - app1_volume:/app/data
+
+  app2:
+    image: doc-proc-be
+    container_name: document-processing-container
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+    depends_on:
+      - db
+    networks:
+      - app_network
+    volumes:
+      - app1_volume:/document-processing-backend/app/docs
+
+  db:
+    image: postgres:latest
+    container_name: db_container
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=new_password
+      - POSTGRES_DB=docusecure
+    networks:
+      - app_network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+networks:
+  app_network:
+
+volumes:
+  app1_volume:  # Shared volume for file storage
+  db_data:
