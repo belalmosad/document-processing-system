@@ -8,7 +8,7 @@ from middleware.exception_handling import ExceptionHandlingMiddleware
 from middleware.custom_response import CustomResponseMiddleware
 from middleware.audit_trail import AuditTrailMiddleware
 from core.config import Config
-
+from integrations import external_api
 
 
 app = FastAPI()
@@ -21,6 +21,7 @@ import_models()
 app.include_router(user.router, prefix="/api/v1/users", tags=["Users"])
 app.include_router(document.router, prefix="/api/v1/documents", tags=["Documents"])
 app.include_router(admin.router, prefix="/api/v1/admin", tags=["Admin"])
+app.include_router(external_api.router, prefix="/api/v1/extra")
 
 load_dotenv()
 

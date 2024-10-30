@@ -22,6 +22,9 @@ class Config:
     #SA
     SA_CRED=os.getenv("SA_CRED")
     
+    #External_API
+    EXTERNAL_API_URL = os.getenv("EXTERNAL_API_URL")
+    
     # Stop words for document processing
     STOP_WORDS= ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 
     'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 
