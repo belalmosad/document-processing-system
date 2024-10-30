@@ -19,6 +19,9 @@ class Config:
     # volume path
     VOLUME_PATH=os.getenv("VOLUME_PATH")
     
+    #SA
+    SA_CRED=os.getenv("SA_CRED")
+    
     # Stop words for document processing
     STOP_WORDS= ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 
     'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 
