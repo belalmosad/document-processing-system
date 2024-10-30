@@ -25,3 +25,8 @@ The system consists of major five components interacting together:
 
 > Docker containers communicate with each other using bridge network driver as defined in `docker-compose.yml`
 
+## After running `docker-compose.yml`
+You can go to the host and port of document processing system and test using swagger
+for example if it is running on port 3001 you can open `http://localhost:3001/docs` to test using swagger
+
+
