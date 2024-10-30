@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from dotenv import load_dotenv
 import uvicorn
-from api.routers import user, document
+from api.routers import user, document, admin
 from db.base import import_models
 from middleware.exception_handling import ExceptionHandlingMiddleware
 from middleware.custom_response import CustomResponseMiddleware
@@ -18,6 +18,7 @@ import_models()
 
 app.include_router(user.router, prefix="/api/v1/users", tags=["Users"])
 app.include_router(document.router, prefix="/api/v1/documents", tags=["Documents"])
+app.include_router(admin.router, prefix="/api/v1/admin", tags=["Admin"])
 
 load_dotenv()
 
