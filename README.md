@@ -16,3 +16,12 @@ The system consists of major five components interacting together:
 ## Database UML diagram
 
 <img src="./pictures/db_uml.svg">
+
+## How to run using docker
+- Clone the repo
+- Inside *document-processing-backend* add `.env` such as `.env.example file`
+- Inside *external-api* add `.env` such as `.env.example file`
+- Run `docker-compose.yml` file using command `docker-compose up -d`
+
+> Docker containers communicate with each other using bridge network driver as defined in `docker-compose.yml`
+
