@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        form, table {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+        }
+        label, input[type="text"], input[type="file"] {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .empty-state {
+            color: #888;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Dashboard</h1>
+
+    <!-- Search Form -->
+    <h2>Search Documents</h2>
+    <form id="search-form">
+        <label for="search">Enter search keyword:</label>
+        <input type="text" id="search" name="search" required>
+        <input type="submit" value="Search">
+    </form>
+    <table id="search-results-table" style="display: none;">
+        <thead>
+            <tr>
+                <th>Document ID</th>
+                <th>Filename</th>
+                <th>Keywords</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Search results will be inserted here -->
+        </tbody>
+    </table>
+    <p id="search-empty-state" class="empty-state" style="display: none;">No documents found for the search term.</p>
+
+    <!-- My Files Section -->
+    <h2>My Files</h2>
+    <table id="my-files-table">
+        <thead>
+            <tr>
+                <th>Document ID</th>
+                <th>Keywords</th>
+                <th>Document Type</th>
+                <th>Size</th>
+                <th>Filename</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- My files data will be inserted here -->
+        </tbody>
+    </table>
+    <p id="my-files-empty-state" class="empty-state" style="display: none;">You have no files available.</p>
+
+    <!-- Single Document Metadata Form -->
+    <h2>Get Document by ID</h2>
+    <form id="single-document-form">
+        <label for="document-id">Enter Document ID:</label>
+        <input type="text" id="document-id" name="document-id" required>
+        <input type="submit" value="Fetch Document Metadata">
+    </form>
+    <table id="single-document-table" style="display: none;">
+        <thead>
+            <tr>
+                <th>Document ID</th>
+                <th>Keywords</th>
+                <th>Document Type</th>
+                <th>Size</th>
+                <th>Filename</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Single document data will be inserted here -->
+        </tbody>
+    </table>
+    <p id="single-document-empty-state" class="empty-state" style="display: none;">No document found with this ID.</p>
+
+    <!-- Document Upload Section -->
+    <h2>Upload Document</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="file">Choose a document to upload:</label>
+        <input type="file" id="file" name="file" required>
+        <input type="submit" value="Upload Document">
+    </form>
+    <p id="upload-response-message" class="message" style="display: none;"></p>
+
+    <!-- Get Document URL Section -->
+    <h2>Get Document URL</h2>
+    <form id="get-url-form">
+        <label for="document-id-url">Enter Document ID:</label>
+        <input type="text" id="document-id-url" name="document-id-url" required>
+        <input type="submit" value="Get Document URL">
+    </form>
+    <p id="document-url" class="message" style="display: none;"></p>
+
+    <script src="../js/user-dashboard.js"></script>
+</body>
+</html>
