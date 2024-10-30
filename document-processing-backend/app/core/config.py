@@ -25,6 +25,9 @@ class Config:
     #External_API
     EXTERNAL_API_URL = os.getenv("EXTERNAL_API_URL")
     
+    #Aloowed origin 
+    ALLOWED_ORIGIN=os.getenv("ALLOWED_ORIGIN")
+    
     # Stop words for document processing
     STOP_WORDS= ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 
     'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 

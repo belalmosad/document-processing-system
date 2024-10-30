@@ -11,6 +11,8 @@ from middleware.custom_response import CustomResponseMiddleware
 from middleware.audit_trail import AuditTrailMiddleware
 from core.config import Config
 from integrations import external_api
+from fastapi.middleware.cors import CORSMiddleware
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +20,15 @@ app = FastAPI()
 app.add_middleware(ExceptionHandlingMiddleware)
 app.add_middleware(CustomResponseMiddleware)
 app.add_middleware(AuditTrailMiddleware)
+# Configure CORS
+print(Config.ALLOWED_ORIGIN)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[Config.ALLOWED_ORIGIN],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 import_models() 
 
