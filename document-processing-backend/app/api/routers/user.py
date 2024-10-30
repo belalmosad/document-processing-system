@@ -4,10 +4,11 @@ from api.schemas.user import UserCreate, UserLogin, UserResponse
 from sqlalchemy.orm import Session
 from db.session import get_db
 from core.dependencies import get_user_service
+from core.security import auth_guard, authorize_admin
 
 router = APIRouter()
 
-@router.post("/signup")
+@router.post("/signup", dependencies=[Depends(auth_guard), Depends(authorize_admin)])
 def user_signup_route(
     user: UserCreate, 
     user_service: UserService = Depends(get_user_service)):

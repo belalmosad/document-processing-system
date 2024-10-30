@@ -33,6 +33,8 @@ async def auth_guard(
     return payload
 
 async def authorize_to_show_document(request: Request, document_id: int, session: Session = Depends(get_db)):
+    if "role" in request.state.user and request.state.user["role"] == "admin":
+        return True
     user_id = request.state.user["user_id"]
     is_authorized = session.query(
         exists().where(
@@ -51,3 +53,12 @@ async def authorize_to_show_document(request: Request, document_id: int, session
             detail="Access required to this document"
         )
     return is_authorized
+
+async def authorize_admin(request: Request):
+        
+    if "role" not in request.state.user or request.state.user["role"] != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to perform action"
+        )
+    return True
