@@ -4,9 +4,11 @@ from pathlib import Path
 import re
 from fastapi import HTTPException, UploadFile, status
 from fastapi.responses import StreamingResponse
+from sqlalchemy import and_, or_
 from sqlalchemy.orm import Session
 from api.schemas.document import DocumentMetadataResponse
 from db.models.document_metadata import DocumentMetadata
+from db.models.document_user_permissions import DocumentUserPermission
 from abc import ABC, abstractmethod
 import PyPDF2
 from core.config import Config
@@ -121,7 +123,20 @@ class DocumentService:
         document_output.seek(0)
         return StreamingResponse(document_output, media_type=f"{document_metadata.mime_type}", headers={
         "Content-Disposition": f'attachment; filename="{document_metadata.filename}"'})
-        
+    
+    def search_by_keywords(self, keywords: list[str]):
+        query = (
+        self.db.query(DocumentMetadata)
+        .filter(or_(
+            *[
+                DocumentMetadata.keywords.has_key(keyword)
+                for keyword in keywords
+            ]
+        )))
+
+        results = query.all()
+        return results
+            
     # Private helper functions
     def _map_MIME_type(self, type: str) -> str:
         MIME_types = {

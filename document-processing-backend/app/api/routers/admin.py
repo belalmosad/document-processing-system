@@ -10,8 +10,6 @@ router = APIRouter()
 def admin_login_route(
     admin_login: AdminLogin, 
     authentication_service: AuthenticationService = Depends(get_auth_service)) -> AdminLoginResponse:
-    print(admin_login.admin_cred)
-    print(Config.SA_CRED)
     if(admin_login.admin_cred != Config.SA_CRED):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

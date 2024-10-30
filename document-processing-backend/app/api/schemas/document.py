@@ -2,6 +2,8 @@ from collections import defaultdict
 from pydantic import BaseModel
 
 
+class DocumentSearch(BaseModel):
+    search: str
 
 class DocumentMetadataResponse(BaseModel):
     id: int
