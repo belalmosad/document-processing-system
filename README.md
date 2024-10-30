@@ -28,7 +28,7 @@ The system consists of major five components interacting together:
 ## After running `docker-compose.yml`
 Open the front-end on the running port `e.g. http://localhost:3002/html/index.html` to see the home page.
 
-> Since it's simple front-end add with pure html, css, and javascript, I run it over http-server using command 
+> Since it's simple front-end app with pure html, css, and javascript, I run it over http-server using command 
 `http-server -p 3002` after installing it using `npm install -g http-server`
 
 > You can go to the host and port of document processing system and test using swagger
