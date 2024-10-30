@@ -1,15 +1,15 @@
 import os
 from fastapi import FastAPI
-from dotenv import load_dotenv
 import uvicorn
-
+from core.config import Config
+from api.routes import additional_metadata
 
 app = FastAPI()
-load_dotenv()
+app.include_router(additional_metadata.route, prefix="/external")
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+HOST = Config.HOST
+PORT = Config.PORT
+DEBUG = Config.DEBUG
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=os.getenv("HOST", "0.0.0.0"), port=int(os.getenv("PORT", 3000)), reload=os.getenv("DEBUG"))
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=DEBUG)
