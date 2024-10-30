@@ -1,4 +1,6 @@
 import os
+from db.session import engine
+from db.base import Base
 from fastapi import FastAPI
 from dotenv import load_dotenv
 import uvicorn
@@ -10,6 +12,7 @@ from middleware.audit_trail import AuditTrailMiddleware
 from core.config import Config
 from integrations import external_api
 
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.add_middleware(ExceptionHandlingMiddleware)
