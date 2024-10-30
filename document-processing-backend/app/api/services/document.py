@@ -81,7 +81,7 @@ class DocumentService:
         self.db = db
         self.document_factory = document_factory
     
-    async def process_document(self, document_data: UploadFile) -> DocumentMetadataResponse:
+    async def process_document(self, document_data: UploadFile, author_id=int) -> DocumentMetadataResponse:
         document_type = self._map_MIME_type(document_data.content_type)
         document_prcessor = self.document_factory.get_document_processor(document_type)
         processed_document = await document_prcessor.process(document_data)
@@ -91,7 +91,7 @@ class DocumentService:
             mime_type=document_data.content_type,
             keywords=processed_document,
             filename=document_data.filename,
-            author_id=28,
+            author_id=author_id,
             processing_status="Completed"
         )
         self.db.add(db_document_metadata)

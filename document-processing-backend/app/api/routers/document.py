@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, Request, UploadFile
 from fastapi.responses import StreamingResponse
 from core.dependencies import get_document_service
 from api.services.document import DocumentService
@@ -9,9 +9,11 @@ router = APIRouter(dependencies=[Depends(auth_guard)])
 
 @router.post("/upload")
 async def upload_and_process_document_router(
-    file: UploadFile = File(...), 
+    request: Request, 
+    file: UploadFile = File(...),
     document_service: DocumentService = Depends(get_document_service)) -> DocumentMetadataResponse:
-    document_metadata = await document_service.process_document(file)
+    author_id = request.state.user["user_id"]
+    document_metadata = await document_service.process_document(file, author_id)
     return document_metadata
 
 @router.get("/metadata/{document_id}", dependencies=[Depends(authorize_to_show_document)])
@@ -21,8 +23,11 @@ def get_document_metadata_by_id_router(
     return document_service.get_document_metadata_by_document_id(document_id)
 
 @router.get("/metadata/author/all")
-def get_document_metadata_by_author_id_router(document_service: DocumentService = Depends(get_document_service)):
-    return document_service.get_document_by_author_id(28)
+def get_document_metadata_by_author_id_router(
+        request: Request, 
+        document_service: DocumentService = Depends(get_document_service)):
+    user_id = request.state.user["user_id"]
+    return document_service.get_document_by_author_id(user_id)
 
 @router.get("/{document_id}", dependencies=[Depends(authorize_to_show_document)])
 def get_document_url_router(document_id: int, document_service: DocumentService = Depends(get_document_service)) -> StreamingResponse:
