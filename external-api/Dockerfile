@@ -1,6 +1,8 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /
+
+ENV PYTHONPATH /app
 
 COPY requirements.txt .
 
