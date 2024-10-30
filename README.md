@@ -26,7 +26,15 @@ The system consists of major five components interacting together:
 > Docker containers communicate with each other using bridge network driver as defined in `docker-compose.yml`
 
 ## After running `docker-compose.yml`
-You can go to the host and port of document processing system and test using swagger
-for example if it is running on port 3001 you can open `http://localhost:3001/docs` to test using swagger
+Open the front-end on the running port `e.g. http://localhost:3002/html/index.html` to see the home page.
+
+> You can go to the host and port of document processing system and test using swagger
+for example if it is running on port 3001 you can open `http://localhost:3001/docs` to test using swagger as the front-end is so pleasant regarding user experience
+
+## Further Improvements 
+* Implement document encryption on file storage level and encrypt keys in the keywords jsonb field (python dictionary) and handle searching encrypted words efficiently
+* Handle granting user permission on admin level to grant users different levels of permissions on specific files (there is already a conjuction table that handles user-document permissions)
+* Implement client-side code that tracks documents processing status and handle batch files uploads
+
 
 
